@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>서버 등록 | OpsWatcher</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="login-body">
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <h1>서버 등록</h1>
+            <p>모니터링할 서버 정보를 입력하세요</p>
+        </div>
+
+        <form method="post" action="/server/new" class="login-form">
+            <label for="name">서버명</label>
+            <input type="text" id="name" name="name" placeholder="예: Busan-Server" required>
+
+            <label for="ip">IP 주소</label>
+            <input type="text" id="ip" name="ip" placeholder="예: 192.168.0.10" required>
+
+            <label for="description">설명</label>
+            <input type="text" id="description" name="description" placeholder="예: 부산 운영 서버" required>
+
+            <button type="submit">서버 등록</button>
+        </form>
+
+        <div class="login-info">
+            <a href="/dashboard">대시보드로 돌아가기</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

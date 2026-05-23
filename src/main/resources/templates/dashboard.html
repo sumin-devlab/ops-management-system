@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="5">
+    <title>OpsWatcher Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header class="top-header">
+    <div>
+        <h1>OpsWatcher Dashboard</h1>
+        <p>CPU · 메모리 · 디스크 사용률 기반 서버 상태 모니터링 시스템</p>
+    </div>
+
+    <div class="header-actions">
+        <a href="/server/new" class="add-server-btn">서버 등록</a>
+
+        <form method="post" action="/logout">
+            <button type="submit" class="logout-btn">로그아웃</button>
+        </form>
+    </div>
+</header>
+
+<main class="dashboard-wrapper">
+
+    <section class="summary-grid">
+        <div class="summary-card">
+            <h2>전체 서버</h2>
+            <p th:text="${totalServers}">0</p>
+        </div>
+
+        <div class="summary-card success">
+            <h2>정상 서버</h2>
+            <p th:text="${normalServers}">0</p>
+        </div>
+
+        <div class="summary-card warning-card">
+            <h2>점검 서버</h2>
+            <p th:text="${warningServers}">0</p>
+        </div>
+
+        <div class="summary-card danger">
+            <h2>위험 서버</h2>
+            <p th:text="${dangerServers}">0</p>
+        </div>
+    </section>
+
+    <section class="content-grid">
+        <div class="panel">
+            <div class="panel-header">
+                <h2>서버 상태</h2>
+                <span>5초마다 자동 갱신</span>
+            </div>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>서버명</th>
+                    <th>IP</th>
+                    <th>CPU</th>
+                    <th>메모리</th>
+                    <th>디스크</th>
+                    <th>상태</th>
+                    <th>삭제</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="server : ${servers}">
+                    <td th:text="${server.name}"></td>
+                    <td th:text="${server.ip}"></td>
+                    <td th:text="${server.cpuUsage + '%'}"></td>
+                    <td th:text="${server.memoryUsage + '%'}"></td>
+                    <td th:text="${server.diskUsage + '%'}"></td>
+
+                    <td>
+                        <span th:if="${server.status == '정상'}" class="status normal">정상</span>
+                        <span th:if="${server.status == '점검'}" class="status warning">점검</span>
+                        <span th:if="${server.status == '위험'}" class="status danger">위험</span>
+                    </td>
+
+                    <td>
+                        <a th:href="@{/server/delete/{id}(id=${server.id})}"
+                           onclick="return confirm('삭제하시겠습니까?')"
+                           class="delete-btn">
+                            삭제
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</main>
+
+</body>
+</html>
